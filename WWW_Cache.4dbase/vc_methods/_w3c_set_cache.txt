@@ -1,0 +1,44 @@
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+If (False)//Description
+// ----------------------------------------------------
+// Developer: James Borillo
+// Date and time: 21/09/16 at 13:35
+// ----------------------------------------------------
+// This will Set a Cache in a file....
+End if 
+
+If (True)//Declarations and initialization of variables
+C_BOOLEAN($0)
+C_TEXT($1;$url;$url_file)
+C_TEXT($2;$body)
+C_TEXT($response)
+C_LONGINT($CP)
+$CP:=Count parameters
+End if 
+
+If ($CP>=2)
+$url:=$1
+$url_file:=Replace string($url;"://";"-//")
+$body:=$2
+End if 
+
+$cache_path:=Get 4D folder(Current resources folder)+"www_cache"+Folder separator+$url_file
+
+Case of 
+: (Test path name($cache_path)=Is a document)
+
+// Force Delete if it exist to make it available for new cache
+DELETE DOCUMENT($cache_path)
+
+Else 
+
+End case 
+
+// Create Cache
+$doc_ref:=Create document($cache_path)
+
+If (OK=1)
+SEND PACKET($doc_ref;$body)// Append a string
+CLOSE DOCUMENT($doc_ref)// Close the document
+$0:=True
+End if 

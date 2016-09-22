@@ -1,0 +1,66 @@
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+If (False)//Description
+// ----------------------------------------------------
+// Developer: James Borillo
+// Date and time: 21/09/16 at 13:35
+// ----------------------------------------------------
+// Returns json config as object
+End if 
+
+If (True)//Declarations and initialization of variables
+C_TEXT($0)
+C_TEXT($1;$url;$url_file)
+C_BOOLEAN($3;$remote)// specify if
+C_TEXT($response)
+C_LONGINT($CP)
+$CP:=Count parameters
+End if 
+
+If ($CP>=1)
+$url:=$1
+$url_file:=Replace string($url;"://";"-//")
+End if 
+
+$cache_path:=Get 4D folder(Current resources folder)+"www_cache"+Folder separator+$url_file
+
+If (Test path name($cache_path)=Is a document)
+
+// In Roadmap, Check cache expire.
+
+$cache_expire:=OB Get(_w3c_get_config ;"cache_expire")
+// Check modify date of the file then check difference from current date
+
+//GET DOCUMENT PROPERTIES($cache_path;$doc_locked;$invisible;$created_on;$created_at;$modified_on;$modified_at)
+
+//$doc_timestamp:=String($modified_on;ISO date;$modified_at)
+//$doc_date:=Date($doc_timestamp)
+//$doc_time:=Time($doc_timestamp)
+
+//$current_timestamp:=String(Current date;ISO date;Current time)
+//$current_date:=Date($current_timestamp)
+//$current_time:=Time($current_timestamp)
+//$current_time_int:=Time($current_time)
+
+//$diff_date:=$current_date-$doc_date
+
+//If($diff_date=1) 
+
+//$diff:=$current_time - $doc_time
+//Else 
+
+//$make_cache:=true
+
+//End if 
+
+
+// Get from cache
+$0:=Document to text($cache_path)
+
+Else 
+
+// No cache
+
+End if 
+
+
+
