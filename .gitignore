@@ -1,14 +1,14 @@
 config.json
-WWW_Cache.4dbase/Components
-WWW_Cache.4dbase/vc_data
-WWW_Cache_Build
-WWW_Cache.4dbase/vc_methods/Debug.txt
-WWW_Cache.4dbase/WWW_Cache.4DD
-WWW_Cache.4dbase/WWW_Cache.4DIndy
-WWW_Cache.4dbase/WWW_Cache.journal
-WWW_Cache.4dbase/WWW_Cache.Match
-WWW_Cache.4dbase alias
-WWW_Cache.4dbase/Logs
-WWW_Cache.4dbase/Preferences/BuildApp
-WWW_Cache.4dbase/Resources/www_cache/
+w3_cache.4dbase/Components
+w3_cache.4dbase/vc_data
+w3_cache_Build
+w3_cache.4dbase/vc_methods/Debug.txt
+w3_cache.4dbase/w3_cche.4DD
+w3_cache.4dbase/w3_cache.4DIndy
+w3_cache.4dbase/w3_cache.journal
+w3_cache.4dbase/w3_cache.Match
+w3_cache.4dbase alias
+w3_cache.4dbase/Logs
+w3_cache.4dbase/Preferences/BuildApp
+w3_cache.4dbase/Resources/cache/
 Backup.xml

@@ -10,8 +10,7 @@ End if
 If (True)//Declarations and initialization of variables
 C_TEXT($0)
 C_TEXT($1;$url;$url_file)
-C_BOOLEAN($3;$remote)// specify if
-C_TEXT($response)
+C_TEXT($cache_expire)
 C_LONGINT($CP)
 $CP:=Count parameters
 End if 
@@ -21,7 +20,7 @@ $url:=$1
 $url_file:=Replace string($url;"://";"-//")
 End if 
 
-$cache_path:=Get 4D folder(Current resources folder)+"www_cache"+Folder separator+$url_file
+$cache_path:=Get 4D folder(Current resources folder)+"cache"+Folder separator+$url_file
 
 If (Test path name($cache_path)=Is a document)
 

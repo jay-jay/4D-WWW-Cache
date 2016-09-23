@@ -11,7 +11,6 @@ If (True)//Declarations and initialization of variables
 C_BOOLEAN($0)
 C_TEXT($1;$url;$url_file)
 C_TEXT($2;$body)
-C_TEXT($response)
 C_LONGINT($CP)
 $CP:=Count parameters
 End if 
@@ -22,7 +21,7 @@ $url_file:=Replace string($url;"://";"-//")
 $body:=$2
 End if 
 
-$cache_path:=Get 4D folder(Current resources folder)+"www_cache"+Folder separator+$url_file
+$cache_path:=Get 4D folder(Current resources folder)+"cache"+Folder separator+$url_file
 
 Case of 
 : (Test path name($cache_path)=Is a document)
