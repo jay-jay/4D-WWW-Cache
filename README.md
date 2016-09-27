@@ -1,7 +1,7 @@
 # 4D-W3
 Features
 - Static caching for 4D.
-  - Cache will be saved as file under /Resources/cache
+  - Cache will be saved as file under directory w3.4dbase/w3_cache/
 - Extended json parser
 ##Usage
 
