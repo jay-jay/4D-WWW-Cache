@@ -1,5 +1,7 @@
-# 4D-WWW-Cache
-Static caching for 4D
+# 4D-W3
+Features
+- Static caching for 4D
+- Extended json parser
 
 ##Usage
 
