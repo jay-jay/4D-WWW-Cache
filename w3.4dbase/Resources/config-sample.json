@@ -1,4 +1,4 @@
 {
 	"environment" : "develop",
-	"cache_expire" : 24
+	"cache_expire" : 1
 }
