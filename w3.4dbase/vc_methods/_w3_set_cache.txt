@@ -28,7 +28,7 @@ Else
 $file_extension:="txt"
 End if 
 
-$cache_path:=Get 4D folder(Current resources folder)+"cache"+Folder separator+$key_hash+"."+$file_extension
+$cache_path:=Get 4D folder(Logs folder)+"cache"+Folder separator+$key_hash+"."+$file_extension
 
 Case of 
 : (Test path name($cache_path)=Is a document)
