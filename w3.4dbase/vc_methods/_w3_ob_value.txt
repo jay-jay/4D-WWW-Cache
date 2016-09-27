@@ -1,0 +1,97 @@
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+// ----------------------------------------------------
+// Developer: James Borillo
+// github: https://github.com/jay-jay
+// ----------------------------------------------------
+// Returns a JSON STRING
+// It is up to the developer on how will be the parsing
+// Example: 
+//    1. $txt:=_w3_ob_value($obj;"property_text->property_array[2]->value") // returns a string
+//    2. $txt:=_w3_ob_value($obj;"property_text->property_array[2]") // returns an object in string
+//    3. $txt:=_w3_ob_value($obj;"property_text->property_array[]") // returns an object array in string
+//    4. $txt:=_w3_ob_value($obj;"property_text->property_array[0]") // same as number 3: returns an object array in string
+
+C_TEXT($0)
+C_OBJECT($1;$obj)
+C_TEXT($2;$getters)
+
+If (Count parameters>=2)
+
+$obj:=$1
+$getters:=$2
+
+ARRAY TEXT($a_getter;0)
+
+While (Length($getters)>0)
+
+$getter_pos:=Position("->";$getters)
+If ($getter_pos>0)
+$getter:=Substring($getters;1;$getter_pos-1)
+
+Else 
+$getter:=$getters// End of getters
+End if 
+
+APPEND TO ARRAY($a_getter;$getter)
+
+If ($getter_pos>0)
+$getters:=Replace string($getters;$getter+"->";"")
+Else 
+$getters:=Replace string($getters;$getter;"")
+End if 
+
+End while 
+
+$ii:=Size of array($a_getter)
+
+For ($i;1;$ii)
+
+Case of 
+: (Position("[";$a_getter{$i})>0) & (Position("]";$a_getter{$i})>0)// Get an OBJECT ARRAY
+
+$square_start:=Position("[";$a_getter{$i})
+$square_end:=Position("]";$a_getter{$i})
+
+$key:=Substring($a_getter{$i};1;$square_start-1)
+$array_pos:=Num(Substring($a_getter{$i};$square_start+1;$square_end-$square_start))
+
+ARRAY OBJECT($obj_array;0)
+OB GET ARRAY($obj;$key;$obj_array)
+$obj_array_size:=Size of array($obj_array)
+
+Case of 
+: ($array_pos#0) & ($obj_array_size>=$array_pos)// Array position in range
+$obj:=$obj_array{$array_pos}
+: ($array_pos=0)
+// Return immediately
+$0:=JSON Stringify array($obj_array)
+$i:=$ii
+Else 
+//Error Exit and return error
+$0:="Array range error: "+$key+"{"+String($array_pos)+"}"
+$i:=$ii
+End case 
+
+
+Else // GET an OBJECT or a STRING
+
+$key:=$a_getter{$i}
+$obj_get:=OB Get($obj;$key)
+$type:=Type($obj_get)
+
+Case of 
+: ($Type=Is object)
+$obj:=$obj_get
+: ($Type=Is text)
+$0:=OB Get($obj;$key)
+End case 
+
+End case 
+
+End for 
+
+If (Length($0)=0)// Not a value but an object 
+$0:=JSON Stringify($obj)
+End if 
+
+End if 

@@ -9,19 +9,26 @@ End if
 
 If (True)//Declarations and initialization of variables
 C_BOOLEAN($0)
-C_TEXT($1;$url;$url_file)
+C_TEXT($1;$key;$url_file)
 C_TEXT($2;$body)
+C_TEXT($3;$file_extension)
 C_LONGINT($CP)
 $CP:=Count parameters
 End if 
 
 If ($CP>=2)
-$url:=$1
-$url_file:=Replace string($url;"://";"-//")
+$key:=$1
+$key_hash:=Generate digest($key;SHA1 digest)
 $body:=$2
 End if 
 
-$cache_path:=Get 4D folder(Current resources folder)+"cache"+Folder separator+$url_file
+If ($CP>=3)
+$file_extension:=$3
+Else 
+$file_extension:="txt"
+End if 
+
+$cache_path:=Get 4D folder(Current resources folder)+"cache"+Folder separator+$key_hash+"."+$file_extension
 
 Case of 
 : (Test path name($cache_path)=Is a document)

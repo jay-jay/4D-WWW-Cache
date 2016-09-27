@@ -1,0 +1,78 @@
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+If (False)//Description
+// ----------------------------------------------------
+// Developer: James Borillo
+// Date and time: 21/09/16 at 13:35
+// ----------------------------------------------------
+// Returns Static cache if Valid
+// Cache expire in the config file is required
+End if 
+
+If (True)//Declarations and initialization of variables
+C_TEXT($0)
+C_TEXT($1;$key;$key_hash)
+C_TEXT($2;$file_extension)
+C_BLOB($blob)
+C_LONGINT($cache_expire)
+C_LONGINT($CP)
+$CP:=Count parameters
+End if 
+
+If ($CP>=1)
+$key:=$1
+$key_hash:=Generate digest($key;SHA1 digest)
+End if 
+
+If ($CP>=2)
+$file_extension:=$2
+Else 
+$file_extension:="txt"
+End if 
+
+$cache_path:=Get 4D folder(Current resources folder)+"cache"+Folder separator+$key_hash+"."+$file_extension
+
+If (Test path name($cache_path)=Is a document)
+
+// In Roadmap, Check cache expire.
+
+$cache_expire:=OB Get(_w3_get_config ;"cache_expire")
+
+// Check modify date of the file then check difference from current date
+
+GET DOCUMENT PROPERTIES($cache_path;$doc_locked;$invisible;$created_on;$created_at;$modified_on;$modified_at)
+
+$current_timestamp:=String(Current date;ISO date;Current time)
+$current_date:=Date($current_timestamp)
+$current_time:=Time($current_timestamp)
+
+$diff_date:=($current_date-$modified_on)
+
+Case of 
+: ($diff_date=1)
+// If date difference is 1
+$cache_valid:=$current_time<$modified_at// And time difference is negative
+
+: ($diff_date<$cache_expire)
+// Valid
+$cache_valid:=True
+
+Else 
+
+$cache_valid:=False
+
+End case 
+
+If ($cache_valid)
+// Get from cache
+DOCUMENT TO BLOB($cache_path;$blob)
+$0:=BLOB to text($blob;UTF8 text without length)
+Else 
+// Delete expired cache
+DELETE DOCUMENT($cache_path)
+End if 
+
+Else 
+
+// No cache
+
+End if 

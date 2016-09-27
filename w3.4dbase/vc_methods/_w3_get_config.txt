@@ -9,12 +9,12 @@ End if
 
 If (True)//Declarations and initialization of variables
 C_OBJECT($0)
-C_OBJECT(o_w3c_config)
+C_OBJECT(o_w3_config)
 C_LONGINT($CP)
 C_TEXT($result)
 End if 
 
-If (OB Is defined(o_w3c_config))
+If (OB Is defined(o_w3_config))
 // Do nothing
 Else 
 $path:=Get 4D folder(Current resources folder)
@@ -29,6 +29,6 @@ $jsonPath:=$path+"config.json"
 End case 
 
 $doc_txt:=Document to text($jsonPath)
-o_w3c_config:=JSON Parse($doc_txt)
+o_w3_config:=JSON Parse($doc_txt)
 End if 
-$0:=o_w3c_config
+$0:=o_w3_config
