@@ -16,6 +16,8 @@ C_LONGINT($CP)
 $CP:=Count parameters
 End if 
 
+If (OB Get(w3_get_config ;"enabled"))// Only when enabled
+
 If ($CP>=2)
 $key:=$1
 $key_hash:=Generate digest($key;SHA1 digest)
@@ -28,7 +30,16 @@ Else
 $file_extension:="txt"
 End if 
 
-$cache_path:=Get 4D folder(Database folder)+"w3_cache"+Folder separator+$key_hash+"."+$file_extension
+$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
+
+If (Test path name($folder_path)=Is a folder)
+// Do nothing
+Else 
+// Create the folder
+CREATE FOLDER($folder_path)
+End if 
+
+$cache_path:=$folder_path+Folder separator+$key_hash+"."+$file_extension
 
 Case of 
 : (Test path name($cache_path)=Is a document)
@@ -47,4 +58,6 @@ If (OK=1)
 SEND PACKET($doc_ref;$body)// Append a string
 CLOSE DOCUMENT($doc_ref)// Close the document
 $0:=True
+End if 
+
 End if 
