@@ -8,7 +8,7 @@
 3. Enter desired cache_expire. We only support days for cache_expire but we are open to contributors for an extended functionality.
 4. Done
 
-Features
+### Features
 - Cache content dynamically generated into file caching for 4D.
   - Cache will be saved as file under directory w3.4dbase/w3_cache/
 - Extended json parser
