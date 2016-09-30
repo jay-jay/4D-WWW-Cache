@@ -10,7 +10,7 @@
 
 ### Features
 - Cache content dynamically generated into file caching for 4D.
-  - Cache will be saved as file under directory w3.4dbase/w3_cache/
+  - Cache will be saved as file under directory YOU_APPLICATION.4dbase/w3_cache/
 - Extended json parser
 
 ### Set a Cache
