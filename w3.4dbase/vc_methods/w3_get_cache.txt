@@ -11,7 +11,6 @@ End if
 If (True)//Declarations and initialization of variables
 C_TEXT($0)
 C_TEXT($1;$key;$key_hash)
-C_TEXT($2;$file_extension)
 C_BLOB($blob)
 C_LONGINT($cache_expire)
 C_LONGINT($CP)
@@ -25,22 +24,8 @@ $key:=$1
 $key_hash:=Generate digest($key;SHA1 digest)
 End if 
 
-If ($CP>=2)
-$file_extension:=$2
-Else 
-$file_extension:="txt"
-End if 
-
 $folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
-
-If (Test path name($folder_path)=Is a folder)
-// Do nothing
-Else 
-// Create the folder
-CREATE FOLDER($folder_path)
-End if 
-
-$cache_path:=$folder_path+Folder separator+$key_hash+"."+$file_extension
+$cache_path:=$folder_path+Folder separator+$key_hash+".cache"
 
 If (Test path name($cache_path)=Is a document)
 
