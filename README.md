@@ -46,9 +46,8 @@ http://www.yourdomain.com/4daction/purge_cache/?key=http://www.jamesborillo.com
 ```
 will purge a cached key "http://www.jamesborillo.com"
 
-The following method is requred in your application in order for the above URL to work
+Method "purge_cache" is requred in your application in order for the above URL to work. Add the following lines in the method.
 ```
-Method purge_cache content
 C_TEXT($0;$1)
 w3_purge_cache
 ```
