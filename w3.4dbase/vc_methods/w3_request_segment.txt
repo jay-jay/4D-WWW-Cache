@@ -1,0 +1,25 @@
+//%attributes = {"lang":"en"} comment added and reserved by 4D.
+C_TEXT($0)
+C_INTEGER($1;$segment)
+$CP:=Count parameters
+$Continue:=False
+
+If ($CP>=1)
+$segment:=$1
+$Continue:=True
+End if 
+
+If ($Continue)
+
+$URL:=OB Get(w3_ob_http_header ;"X-URL")
+
+// Remove 4daction in URL before stripping
+$URL:=Replace string($URL;"/4daction";"")
+$URL:=Substring($URL;2)
+
+ARRAY TEXT($a_segments;0)
+$phpok:=PHP Execute("";"explode";$a_segments;"/";$URL)
+
+$0:=$a_segments{$segment}
+
+End if 
