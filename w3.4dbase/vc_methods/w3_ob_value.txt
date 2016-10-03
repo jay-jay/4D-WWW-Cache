@@ -4,6 +4,8 @@
 // github: https://github.com/jay-jay
 // ----------------------------------------------------
 // Returns a JSON STRING
+// @param_1: object
+// @param_2: breadcrumb
 // It is up to the developer on how will be the parsing
 // Example: 
 //    1. $txt:=_w3_ob_value($obj;"property_text->property_array[2]->value") // returns a string

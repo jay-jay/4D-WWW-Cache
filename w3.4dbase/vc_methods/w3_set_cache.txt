@@ -5,6 +5,8 @@ If (False)//Description
 // Date and time: 21/09/16 at 13:35
 // ----------------------------------------------------
 // This will Set a Cache in a file....
+// @param_1: Key
+// @param_2: cache content
 End if 
 
 If (True)//Declarations and initialization of variables

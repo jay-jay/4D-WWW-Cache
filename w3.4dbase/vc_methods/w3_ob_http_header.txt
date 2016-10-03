@@ -1,4 +1,12 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+If (False)//Description
+// ----------------------------------------------------
+// Developer: James Borillo
+// Date and time: 21/09/16 at 13:35
+// ----------------------------------------------------
+// Returns HTTP HEADERS as JSON
+End if 
+
 C_OBJECT($0;o_w3_http_header)
 
 If (OB Is defined(o_w3_http_header))

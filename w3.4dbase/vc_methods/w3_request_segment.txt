@@ -1,4 +1,12 @@
 //%attributes = {"lang":"en"} comment added and reserved by 4D.
+If (False)//Description
+// ----------------------------------------------------
+// Developer: James Borillo
+// Date and time: 21/09/16 at 13:35
+// ----------------------------------------------------
+// Returns a pretty-url segment
+// @param_1: segment position
+End if 
 C_TEXT($0)
 C_INTEGER($1;$segment)
 $CP:=Count parameters
