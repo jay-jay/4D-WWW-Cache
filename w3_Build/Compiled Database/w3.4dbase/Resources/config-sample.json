@@ -1,0 +1,5 @@
+{
+	"environment"  : "develop",
+	"enabled"      : true,
+	"cache_expire" : 1
+}
