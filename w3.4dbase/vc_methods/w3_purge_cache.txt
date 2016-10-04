@@ -19,7 +19,7 @@ $CP:=Count parameters
 C_OBJECT($o_txt)
 End if 
 
-If (OB Get(w3_get_config ;"enabled"))// Only when enabled
+If (OB Get(w3_get_config ;"cache_enabled"))// Only when enabled
 
 $folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
 

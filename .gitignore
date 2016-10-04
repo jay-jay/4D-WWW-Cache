@@ -1,4 +1,4 @@
-config.json
+config*.json
 w3.4dbase/Components
 w3.4dbase/vc_data
 w3.4dbase/vc_methods/Debug.txt

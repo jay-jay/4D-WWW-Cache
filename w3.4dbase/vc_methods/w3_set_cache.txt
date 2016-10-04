@@ -17,7 +17,7 @@ C_LONGINT($CP)
 $CP:=Count parameters
 End if 
 
-If (OB Get(w3_get_config ;"enabled"))// Only when enabled
+If (OB Get(w3_get_config ;"cache_enabled"))// Only when enabled
 
 If ($CP>=2)
 $key:=$1
