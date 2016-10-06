@@ -4,9 +4,10 @@
 
 ## Installation
 1. Drop w3.4dbase into your 4D Application's Components folder
-2. Under Resources, rename config-sample.json to config.json
+2. Under /w3.4dbase/Resources, rename config-sample.json to config.json
 3. Enter desired cache_expire. We only support days for cache_expire but we are open to contributors for an extended functionality.
-4. Done
+4. Enable by assigning true to config cache_enabled
+5. Done
 
 ### Features
 - Cache content dynamically generated into file caching for 4D.
