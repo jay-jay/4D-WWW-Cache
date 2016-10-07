@@ -1,4 +1,5 @@
-# 4D-W3
+# 4D-W3 Component
+This component will serve as a simple http component but the main functionality is its caching.
 
 #### Contributors are welcome
 
