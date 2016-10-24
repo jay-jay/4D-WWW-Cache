@@ -14,8 +14,8 @@ This component will serve as a simple http component but the main functionality 
 - Cache content dynamically generated into file caching for 4D.
   - Cache will be saved as file under directory YOU_APPLICATION.4dbase/w3_cache/
 - Extended json parser
-- w3_request method - Equivalent of PHP's $_request
-- w3_request_segment method - Easily get a URL segment
+- **w3_request** method - Equivalent of PHP's $_request
+- **w3_request_segment** method - Easily get a URL segment
 
 ### Set a Cache
 ```
