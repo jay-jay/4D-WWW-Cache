@@ -10,6 +10,7 @@ If (False)//Description
 End if 
 C_TEXT($0)
 C_INTEGER($1;$segment)
+C_TEXT($2;$url)
 C_BOOLEAN($phpok)
 $CP:=Count parameters
 $Continue:=False
@@ -18,17 +19,23 @@ If ($CP>=1)
 $segment:=$1
 $Continue:=True
 End if 
+If ($CP>=2)
+$url:=$2
+End if 
 
 If ($Continue)
 
-$URL:=OB Get(w3_ob_http_header ;"X-URL")
-$URL:=Substring($URL;2)// Strip the first slash(/)
+If (Length($url)=0)
+$url:=OB Get(w3_ob_http_header ;"X-URL")
+End if 
+
+$url:=Substring($url;2)// Strip the first slash(/)
 
 ARRAY TEXT($a_segments;0)
 
 $count:=0
 While ((Not($phpok)) & ($count<=10))// 10 max iteration to prevent infinite loop
-$phpok:=PHP Execute("";"explode";$a_segments;"/";$URL)
+$phpok:=PHP Execute("";"explode";$a_segments;"/";$url)
 $count:=$count+1
 End while 
 
