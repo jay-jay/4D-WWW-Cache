@@ -39,7 +39,7 @@ $phpok:=PHP Execute("";"explode";$a_segments;"/";$url)
 $count:=$count+1
 End while 
 
-If ($phpok)
+If ($phpok) & (Size of array($a_segments)>=$segment)
 $0:=$a_segments{$segment}
 End if 
 
