@@ -23,7 +23,11 @@ If (OB Get(w3_get_config ;"cache_enabled"))// Only when enabled
 
 $folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
 
+If ($CP>=1)
+$to_purge:=$1
+Else 
 $to_purge:=w3_request ("key")
+End if 
 
 Case of 
 : ($to_purge="all")
