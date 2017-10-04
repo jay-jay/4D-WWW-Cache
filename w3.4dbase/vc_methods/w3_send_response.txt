@@ -1,14 +1,4 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-// IMPORTANT:$2 for status code is optional b
-// $1 TEXT
-// -Response(json, html)
-// $2 LONGINT
-// -HTTP status code
-// $3 TEXT
-// -Content-Type(default: text/html, application/json)(It is good practice to request with the proper content-Type)
-// $4 TEXT
-// -Redirect URL(This is ignored if status code is not 301)
-
 C_TEXT($0)
 C_TEXT($1;$response)
 C_LONGINT($2;$status_code)
