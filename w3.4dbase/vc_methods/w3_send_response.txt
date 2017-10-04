@@ -1,4 +1,4 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true} comment added and reserved by 4D.
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
 // IMPORTANT:$2 for status code is optional b
 // $1 TEXT
 // -Response(json, html)
@@ -14,26 +14,26 @@ C_TEXT($1;$response)
 C_LONGINT($2;$status_code)
 C_TEXT($3;$content_type)
 C_TEXT($4;$url_redirect)
+$cp:=Count parameters
 
-If ($1#"")
+
+If ($cp>=1)
 $response:=$1
-Else 
-$response:=""
 End if 
 
-If ($2>0)
+If ($cp>=2)
 $status_code:=$2
 Else 
 $status_code:=200// Ok
 End if 
 
-If ($3#"")
+If ($cp>=3)
 $content_type:=$3
 Else 
 $content_type:="text/html"
 End if 
 
-If ($4#"")
+If ($cp>=4)
 $url_redirect:=$4
 End if 
 
