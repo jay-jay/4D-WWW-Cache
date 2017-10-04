@@ -1,0 +1,56 @@
+//%attributes = {"lang":"en","invisible":true,"shared":true} comment added and reserved by 4D.
+// IMPORTANT:$2 for status code is optional b
+// $1 TEXT
+// -Response(json, html)
+// $2 LONGINT
+// -HTTP status code
+// $3 TEXT
+// -Content-Type(default: text/html, application/json)(It is good practice to request with the proper content-Type)
+// $4 TEXT
+// -Redirect URL(This is ignored if status code is not 301)
+
+C_TEXT($0)
+C_TEXT($1;$response)
+C_LONGINT($2;$status_code)
+C_TEXT($3;$content_type)
+C_TEXT($4;$url_redirect)
+
+If ($1#"")
+$response:=$1
+Else 
+$response:=""
+End if 
+
+If ($2>0)
+$status_code:=$2
+Else 
+$status_code:=200// Ok
+End if 
+
+If ($3#"")
+$content_type:=$3
+Else 
+$content_type:="text/html"
+End if 
+
+If ($4#"")
+$url_redirect:=$4
+End if 
+
+ARRAY TEXT($fieldArray;0)
+ARRAY TEXT($valueArray;0)
+
+APPEND TO ARRAY($fieldArray;"X-VERSION")
+APPEND TO ARRAY($fieldArray;"X-STATUS")
+
+APPEND TO ARRAY($valueArray;"HTTP/1.1")
+APPEND TO ARRAY($valueArray;String($status_code))
+
+WEB SET HTTP HEADER($fieldArray;$valueArray)
+
+Case of 
+: ($status_code=301)
+WEB SEND HTTP REDIRECT($url_redirect)
+Else 
+WEB SEND TEXT($response;$content_type)
+End case 
