@@ -1,13 +1,11 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-If (False)//Description
 // ----------------------------------------------------
 // Developer: James Borillo
 // Date and time: 21/09/16 at 13:35
 // ----------------------------------------------------
 // This will Set a Cache in a file....
-// @param_1: Key
-// @param_2: cache content
-End if 
+//$1 TEXT-cache_key
+//$2 TEXT-body
 
 If (True)//Declarations and initialization of variables
 C_BOOLEAN($0)

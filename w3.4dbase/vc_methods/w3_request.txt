@@ -1,13 +1,12 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-If (False)//Description
 // ----------------------------------------------------
 // Developer: James Borillo
 // Date and time: 21/09/16 at 13:35
 // ----------------------------------------------------
-// Returns an HTTP REQUEST variable
+// Returns value of URL parameter from current URL
 // PHP equivalent of $_REQUEST
-// @param_1: http variable
-End if 
+// $1 TEXT-url parameter
+
 C_TEXT($0)
 C_TEXT($1)
 

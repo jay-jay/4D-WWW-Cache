@@ -5,8 +5,8 @@ If (False)//Description
 // Date and time: 21/09/16 at 13:35
 // ----------------------------------------------------
 // Returns a pretty-url segment
-// @param_1: segment position
-// Important: Remember that server side will not receive hash (#) values
+// $1 LONGINT-segment position
+// $2 TEXT clean-url
 End if 
 C_TEXT($0)
 C_INTEGER($1;$segment)

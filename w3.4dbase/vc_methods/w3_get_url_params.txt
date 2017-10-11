@@ -1,5 +1,9 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+
 // This method will parse URL parameters into json
+// Return URL parameters in JSON
+//$1 TEXT-URL
+
 C_OBJECT($0)
 C_TEXT($1;$url)
 $cp:=Count parameters

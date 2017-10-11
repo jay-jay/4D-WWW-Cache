@@ -1,11 +1,17 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+//Handles HTTP responses. Can send HTML, JSON and Redirects
+
+//$1 TEXT-Response(json, html)-Ignored if$2 is 301
+//{$2}LONGINT-HTTP status code(default: 200)-Use 301 to redirect
+//{$3}TEXT-Content-Type(default: text/html)(It is good practice to send response with the proper content-Type)
+//{$4}TEXT-Redirect URL(This is ignored if status code is NOT 301)
+
 C_TEXT($0)
 C_TEXT($1;$response)
 C_LONGINT($2;$status_code)
 C_TEXT($3;$content_type)
 C_TEXT($4;$url_redirect)
 $cp:=Count parameters
-
 
 If ($cp>=1)
 $response:=$1

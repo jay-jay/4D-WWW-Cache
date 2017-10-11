@@ -1,12 +1,10 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true,"executedOnServer":true} comment added and reserved by 4D.
-If (False)//Description
 // ----------------------------------------------------
 // Developer: James Borillo
 // Date and time: 02/10/16 at 15:58
 // ----------------------------------------------------
 // Purge cache
 // @param_1: key to delete
-End if 
 
 If (True)//Declarations and initialization of variables
 C_TEXT($0)

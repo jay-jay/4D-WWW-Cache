@@ -1,11 +1,9 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-If (False)//Description
 // ----------------------------------------------------
 // Developer: James Borillo
 // Date and time: 09/11/15 at 10:35
 // ----------------------------------------------------
 // Returns json config as object
-End if 
 
 If (True)//Declarations and initialization of variables
 C_OBJECT($0)
