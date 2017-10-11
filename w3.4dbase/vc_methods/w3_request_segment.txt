@@ -1,5 +1,4 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-If (False)//Description
 // ----------------------------------------------------
 // Developer: James Borillo
 // Date and time: 21/09/16 at 13:35
@@ -7,7 +6,7 @@ If (False)//Description
 // Returns a pretty-url segment
 // $1 LONGINT-segment position
 // $2 TEXT clean-url
-End if 
+
 C_TEXT($0)
 C_INTEGER($1;$segment)
 C_TEXT($2;$url)
