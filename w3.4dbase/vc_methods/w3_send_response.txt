@@ -46,7 +46,7 @@ WEB SET HTTP HEADER($fieldArray;$valueArray)
 
 Case of 
 : ($status_code=301)
-WEB SEND HTTP REDIRECT($url_redirect)
+WEB SEND HTTP REDIRECT($url_redirect;*)
 Else 
 WEB SEND TEXT($response;$content_type)
 End case 
