@@ -45,7 +45,7 @@ APPEND TO ARRAY($valueArray;String($status_code))
 WEB SET HTTP HEADER($fieldArray;$valueArray)
 
 Case of 
-: ($status_code=301)
+: ($status_code=301) | ($status_code=302)
 WEB SEND HTTP REDIRECT($url_redirect;*)
 Else 
 WEB SEND TEXT($response;$content_type)

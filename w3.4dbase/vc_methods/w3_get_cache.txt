@@ -12,11 +12,14 @@ C_TEXT($0)
 C_TEXT($1;$key;$key_hash)
 C_BLOB($blob)
 C_LONGINT($cache_expire)
+C_BOOLEAN($cache_enabled)
 C_LONGINT($CP)
 $CP:=Count parameters
 End if 
 
-If (OB Get(w3_get_config ;"cache_enabled"))// Only when enabled
+$cache_enabled:=OB Get(w3_get_config ;"cache_enabled")
+
+If ($cache_enabled)// Only when enabled
 
 If ($CP>=1)
 $key:=$1
