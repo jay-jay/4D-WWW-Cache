@@ -1,9 +1,9 @@
-//%attributes = {"lang":"en"} comment added and reserved by 4D.
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
 C_TEXT($0)
 C_LONGINT($1;$segment_number)
 C_TEXT($2;$url)
 C_TEXT($3;$replace_string)
-C_BOOLEAN($continue;$phpok)
+C_BOOLEAN($continue)
 
 $cp:=Count parameters
 

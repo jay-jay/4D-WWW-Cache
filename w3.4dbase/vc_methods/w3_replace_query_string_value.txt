@@ -1,0 +1,42 @@
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+C_TEXT($0)
+C_TEXT($1;$url)
+C_TEXT($2;$query_string)
+C_TEXT($3;$new_value)
+C_TEXT($value;$separator)
+C_LONGINT($pos;$pos_ampersand;$query_string_len)
+
+C_BOOLEAN($continue)
+
+$cp:=Count parameters
+
+If ($cp>=3)
+$url:=$1
+$query_string:=$2
+$new_value:=$3
+$continue:=True
+End if 
+
+If ($continue)
+
+$query_string_len:=Length($query_string)
+$pos:=Position("?"+$query_string;$url)
+If ($pos<1)
+$pos:=Position("&"+$query_string;$url)
+$separator:="&"
+Else 
+$separator:="?"
+End if 
+
+$value:=Substring($url;$pos)
+
+$pos_ampersand:=Position("&";$value;2)// Disregard first ampersand
+If ($pos_ampersand>0)
+$value:=Substring($value;1;$pos_ampersand-1)
+End if 
+
+$new_value:=$separator+$query_string+"="+$new_value
+
+$0:=Replace string($url;$value;$new_value)
+
+End if 
