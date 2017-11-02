@@ -11,6 +11,7 @@ C_TEXT($0)
 C_TEXT($1;$url)
 C_TEXT($2;$query_string)
 C_TEXT($3;$new_value)
+C_BOOLEAN($4;$replaceQueryString)
 C_TEXT($value;$separator)
 C_LONGINT($pos;$pos_ampersand;$query_string_len)
 
@@ -25,6 +26,10 @@ $new_value:=$3
 $continue:=True
 End if 
 
+If ($cp>=4)
+$replaceQueryString:=$4
+End if 
+
 If ($continue)
 
 $query_string_len:=Length($query_string)
@@ -36,6 +41,15 @@ Else
 $separator:="?"
 End if 
 
+Case of 
+: ($pos<1)// Append query string
+If (Position("?";$url)>0)
+$0:=$url+"&"+$query_string+"="+$new_value
+Else 
+$0:=$url+"?"+$query_string+"="+$new_value
+End if 
+
+: ($replaceQueryString)// Replace query string
 $value:=Substring($url;$pos)
 
 $pos_ampersand:=Position("&";$value;2)// Disregard first ampersand
@@ -46,5 +60,9 @@ End if
 $new_value:=$separator+$query_string+"="+$new_value
 
 $0:=Replace string($url;$value;$new_value)
+Else 
+$0:=$url
+
+End case 
 
 End if 
