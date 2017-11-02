@@ -1,4 +1,12 @@
 //%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+// ----------------------------------------------------
+// Developer: James Borillo
+// ----------------------------------------------------
+// Replaces a query strings value
+// @param_1: URL with query strings
+// @param_2: query string
+// @param_3: New value
+
 C_TEXT($0)
 C_TEXT($1;$url)
 C_TEXT($2;$query_string)
