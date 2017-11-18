@@ -1,0 +1,43 @@
+//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+
+// This method will parse URL parameters into json
+// Return URL parameters in JSON
+//$1 TEXT-URL
+
+C_OBJECT($0)
+C_TEXT($1;$url)
+$cp:=Count parameters
+$Continue:=True
+
+If ($cp>=1)
+$url:=$1
+Else 
+$Continue:=False
+End if 
+
+If ($Continue)
+
+While (Position("&";$url)>0) | (Position("?";$url)>0)
+
+$pos_param_break:=Position("?";$url)// Check question-mark first
+If ($pos_param_break=0)// if no question-mark, find anchor param break
+$pos_param_break:=Position("&";$url)
+End if 
+$url:=Substring($url;$pos_param_break+1)
+$pos_equal:=Position("=";$url)
+$pos_next_param_break:=Position("&";$url)
+
+$key:=Substring($url;1;$pos_equal-1)
+If ($pos_next_param_break>0)
+$value:=Substring($url;$pos_equal+1;$pos_next_param_break-$pos_equal-1)
+Else 
+$value:=Substring($url;$pos_equal+1)
+End if 
+
+OB SET($0;$key;$value)
+
+$url:=Substring($url;$pos_next_param_break)
+
+End while 
+
+End if 
