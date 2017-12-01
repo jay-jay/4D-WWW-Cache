@@ -39,7 +39,12 @@ $count:=$count+1
 End while 
 
 If ($phpok) & (Size of array($a_segments)>=$segment)
+$query_string_start:=Position("?";$a_segments{$segment})
+If ($query_string_start>0)
+$0:=Substring($a_segments{$segment};1;$query_string_start-1)
+Else 
 $0:=$a_segments{$segment}
+End if 
 End if 
 
 End if 
