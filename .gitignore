@@ -1,6 +1,4 @@
-config.json
-config-dev.json
-config-test.json
+w3-config.json
 w3.4dbase/Components
 w3.4dbase/vc_data
 w3.4dbase/vc_methods/Debug.txt
@@ -14,4 +12,3 @@ w3.4dbase/Preferences/BuildApp
 w3.4dbase/Resources/cache/
 Backup.xml
 *.4BK
-w3_Build/Compiled Database/w3.4dbase/Resources/config*json
