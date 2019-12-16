@@ -1,0 +1,57 @@
+  //%attributes = {"invisible":true,"shared":true,"lang":"en"} comment added and reserved by 4D.
+  // ----------------------------------------------------
+  // Developer: James Borillo
+  // Date and time: 05/12/19 at 21:35
+  // ----------------------------------------------------
+  // Bootstraps all requests from the client (Browser, API client, Or any other server)
+  // This method should be
+
+If (True)
+	C_BOOLEAN($0;$Built)  // Built
+	C_TEXT($1;$url)  //$URL
+	C_TEXT($2;$client_ip)  //IP ADDRESS OF THE WEB CLIENT
+	C_TEXT($3;$server_ip)  //IP ADDRESS OF THE SERVER
+	C_BOOLEAN($Continue)
+	C_OBJECT(o_w3_ob_request)
+	C_OBJECT($oHeader)
+	$Continue:=True
+	$CP:=Count parameters
+	If ($CP>=3)
+		$url:=$1
+		$client_ip:=$2
+		$server_ip:=$3
+	Else 
+		$Continue:=False
+	End if 
+End if 
+
+Case of 
+	: ($Continue)
+		If (OB Is defined(o_w3_ob_request))
+			$Continue:=False
+		End if 
+End case 
+
+Case of 
+	: ($Continue)
+		OB SET(o_w3_ob_request;\
+			"url";$url;\
+			"client_ip";$client_ip;\
+			"server_ip";$server_ip)
+		
+		ARRAY TEXT($aHeaderNames;0)
+		ARRAY TEXT($aHeaderValues;0)
+		WEB GET HTTP HEADER($aHeaderNames;$aHeaderValues)
+		$ii:=Size of array($aHeaderNames)
+		ARRAY OBJECT($aoHeaders;0)
+		For ($i;1;$ii)
+			OB SET($oHeader;\
+				"name";$aHeaderNames{$i};\
+				"value";$aHeaderValues{$i})
+			$ref:=OB Copy($oHeader)
+			APPEND TO ARRAY($aoHeaders;$ref)
+		End for 
+		OB SET ARRAY(o_w3_ob_request;"headers";$aoHeaders)
+		$Built:=OB Is defined(o_w3_ob_request)
+		$0:=$Built
+End case 

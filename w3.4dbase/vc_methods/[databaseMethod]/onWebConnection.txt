@@ -1,1 +1,14 @@
-//%attributes = {"lang":"en"} comment added and reserved by 4D.
+  //%attributes = {"lang":"en"} comment added and reserved by 4D.
+C_TEXT($1)  //$URL
+C_TEXT($2)  //HTTP HEADER + HTTP BODY (first 32 kb)
+C_TEXT($3)  //ID ADDRESS OF THE WEB CLIENT
+C_TEXT($4)  //IP ADDRESS OF THE SERVER
+C_TEXT($5)  //User name - should usually never be used
+C_TEXT($6)  //Password
+
+w3_ob_request_build ($1;$3;$4)
+
+ARRAY OBJECT($aoHeaders;0)
+OB GET ARRAY(w3_ob_request ;"headers";$aoHeaders)
+
+OB SET(w3_ob_request ;"new-key";"jacsnasj83uwqnjfweqyq98wqehqwhy849q98qoipew")

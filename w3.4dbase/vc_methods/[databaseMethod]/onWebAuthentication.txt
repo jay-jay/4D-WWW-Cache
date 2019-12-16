@@ -1,1 +1,8 @@
-//%attributes = {"lang":"en"} comment added and reserved by 4D.
+  //%attributes = {"lang":"en"} comment added and reserved by 4D.
+C_BOOLEAN($0)
+C_TEXT($1)  //$URL
+C_TEXT($2)  //HTTP HEADER + HTTP BODY (first 32 kb)
+C_TEXT($3)  //ID ADDRESS OF THE WEB CLIENT
+C_TEXT($4)  //IP ADDRESS OF THE SERVER
+C_TEXT($5)  //User name - should usually never be used
+C_TEXT($6)  //Passw

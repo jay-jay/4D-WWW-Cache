@@ -1,0 +1,4 @@
+  //%attributes = {"invisible":true,"lang":"en"} comment added and reserved by 4D.
+C_OBJECT(o_w3_config)
+C_OBJECT(o_w3_http_header)
+C_OBJECT(o_w3_ob_request)

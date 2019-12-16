@@ -1,0 +1,25 @@
+  //%attributes = {"lang":"en"} comment added and reserved by 4D.
+  // ----------------------------------------------------
+  // Developer: James Borillo
+  // Date and time: 05/12/19 at 21:35
+  // ----------------------------------------------------
+  // 
+
+If (True)
+	C_OBJECT($0)
+	C_OBJECT(o_w3_ob_request)
+	C_BOOLEAN($Continue)
+	C_LONGINT($CP)
+	$Continue:=True
+	$Cp:=Count parameters
+End if 
+
+If (OB Is defined(o_w3_ob_request))
+Else 
+	$Continue:=False
+End if 
+
+Case of 
+	: ($Continue)
+		$0:=o_w3_ob_request
+End case 
