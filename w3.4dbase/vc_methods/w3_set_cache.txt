@@ -1,56 +1,65 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-// ----------------------------------------------------
-// Developer: James Borillo
-// Date and time: 21/09/16 at 13:35
-// ----------------------------------------------------
-// This will Set a Cache in a file....
-//$1 TEXT-cache_key
-//$2 TEXT-body
+  //%attributes = {"invisible":true,"shared":true,"publishedWeb":true,"lang":"en"} comment added and reserved by 4D.
+  // ----------------------------------------------------
+  // Developer: James Borillo
+  // Date and time: 21/09/16 at 13:35
+  // ----------------------------------------------------
+  // This will Set a Cache in a file....
+  //$1 TEXT-cache_key
+  //$2 TEXT-body
 
-If (True)//Declarations and initialization of variables
-C_BOOLEAN($0)
-C_TEXT($1;$key;$url_file)
-C_TEXT($2;$body)
-C_LONGINT($CP)
-$CP:=Count parameters
+If (True)  //Declarations and initialization of variables
+	C_BOOLEAN($0)
+	C_TEXT($1;$key;$url_file)
+	C_TEXT($2;$body)
+	C_LONGINT($CP)
+	C_BOOLEAN($Continue)
+	$CP:=Count parameters
+	$Continue:=True
+	If ($CP>=2)
+		$key:=$1
+		$body:=$2
+	Else 
+		$Continue:=False
+	End if 
 End if 
-
-If (OB Get(w3_get_config ;"cache_enabled"))// Only when enabled
-
-If ($CP>=2)
-$key:=$1
-$key_hash:=Generate digest($key;SHA1 digest)
-$body:=$2
-End if 
-
-$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
-
-If (Test path name($folder_path)=Is a folder)
-// Do nothing
-Else 
-// Create the folder
-CREATE FOLDER($folder_path)
-End if 
-
-$cache_path:=$folder_path+Folder separator+$key_hash+".cache"
 
 Case of 
-: (Test path name($cache_path)=Is a document)
-
-// Force Delete if it exist to make it available for new cache
-DELETE DOCUMENT($cache_path)
-
-Else 
-
+	: ($Continue)
+		$Continue:=OB Get(w3_get_config ;"cache_enabled")
+		$key_hash:=Generate digest($key;SHA1 digest)
 End case 
 
-// Create Cache
-$doc_ref:=Create document($cache_path)
-
-If (OK=1)
-SEND PACKET($doc_ref;$body)// Append a string
-CLOSE DOCUMENT($doc_ref)// Close the document
-$0:=True
-End if 
-
-End if 
+Case of 
+	: (Not($Continue))
+	: (Semaphore($key))
+		$0:=True
+	Else 
+		$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
+		
+		If (Test path name($folder_path)=Is a folder)
+			  // Do nothing
+		Else 
+			  // Create the folder
+			CREATE FOLDER($folder_path)
+		End if 
+		
+		$cache_path:=$folder_path+Folder separator+$key_hash+".cache"
+		
+		Case of 
+			: (Test path name($cache_path)=Is a document)
+				  // Force Delete if it exist to make it available for new cache
+				DELETE DOCUMENT($cache_path)
+			Else 
+				
+		End case 
+		
+		  // Create Cache
+		$doc_ref:=Create document($cache_path)
+		
+		If (OK=1)
+			SEND PACKET($doc_ref;$body)  // Append a string
+			CLOSE DOCUMENT($doc_ref)  // Close the document
+			$0:=True
+		End if 
+		CLEAR SEMAPHORE($key)
+End case 
