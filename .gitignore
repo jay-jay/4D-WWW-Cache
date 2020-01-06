@@ -5,6 +5,7 @@ w3.4dbase/vc_methods/Debug.txt
 w3.4dbase/w3.4DD
 # w3.4dbase/w3.4DIndy # Always include 4DIndy in git
 w3.4dbase/w3.journal
+w3.4dbase/w3_cache/
 w3.4dbase/w3.Match
 w3.4dbase alias
 w3.4dbase/Logs/
