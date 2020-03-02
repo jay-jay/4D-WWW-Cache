@@ -11,8 +11,10 @@ If (True)  //Declarations and initialization of variables
 	C_BOOLEAN($0)
 	C_TEXT($1;$key;$url_file)
 	C_TEXT($2;$body)
+	C_BOOLEAN($3;$encryptedKey)
 	C_LONGINT($CP)
 	C_BOOLEAN($Continue)
+	C_TEXT($key_filename)
 	$CP:=Count parameters
 	$Continue:=True
 	If ($CP>=2)
@@ -21,12 +23,21 @@ If (True)  //Declarations and initialization of variables
 	Else 
 		$Continue:=False
 	End if 
+	If ($CP>=3)
+		$encryptedKey:=$3
+	Else 
+		$encryptedKey:=True
+	End if 
 End if 
 
 Case of 
 	: ($Continue)
 		$Continue:=OB Get(w3_get_config ;"cache_enabled")
-		$key_hash:=Generate digest($key;SHA1 digest)
+		If ($encryptedKey)
+			$key_filename:=Generate digest($key;SHA1 digest)
+		Else 
+			$key_filename:=$key
+		End if 
 End case 
 
 Case of 
@@ -43,7 +54,7 @@ Case of
 			CREATE FOLDER($folder_path)
 		End if 
 		
-		$cache_path:=$folder_path+Folder separator+$key_hash+".cache"
+		$cache_path:=$folder_path+Folder separator+$key_filename+".cache"
 		
 		Case of 
 			: (Test path name($cache_path)=Is a document)

@@ -1,78 +1,87 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-// ----------------------------------------------------
-// Developer: James Borillo
-// Date and time: 21/09/16 at 13:35
-// ----------------------------------------------------
-// Returns Static cache if Valid
-// Cache expire in the config file is required
-// @param_1: key
+  //%attributes = {"invisible":true,"shared":true,"publishedWeb":true,"lang":"en"} comment added and reserved by 4D.
+  // ----------------------------------------------------
+  // Developer: James Borillo
+  // Date and time: 21/09/16 at 13:35
+  // ----------------------------------------------------
+  // Returns Static cache if Valid
+  // Cache expire in the config file is required
+  // @param_1: key
 
-If (True)//Declarations and initialization of variables
-C_TEXT($0)
-C_TEXT($1;$key;$key_hash)
-C_BLOB($blob)
-C_LONGINT($cache_expire)
-C_BOOLEAN($cache_enabled)
-C_LONGINT($CP)
-$CP:=Count parameters
+If (True)  //Declarations and initialization of variables
+	C_TEXT($0)
+	C_TEXT($1;$key;$key_filename)
+	C_BOOLEAN($2;$encryptedKey)
+	C_BOOLEAN($cache_valid)
+	C_BLOB($blob)
+	C_LONGINT($cache_expire)
+	C_BOOLEAN($cache_enabled)
+	C_LONGINT($CP)
+	$CP:=Count parameters
+	If ($CP>=1)
+		$key:=$1
+	End if 
+	If ($CP>=2)
+		$encryptedKey:=$2
+	Else 
+		$encryptedKey:=True
+	End if 
 End if 
 
 $cache_enabled:=OB Get(w3_get_config ;"cache_enabled")
 
-If ($cache_enabled)// Only when enabled
-
-If ($CP>=1)
-$key:=$1
-$key_hash:=Generate digest($key;SHA1 digest)
-End if 
-
-$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
-$cache_path:=$folder_path+Folder separator+$key_hash+".cache"
-
-If (Test path name($cache_path)=Is a document)
-
-// In Roadmap, Check cache expire.
-
-$cache_expire:=OB Get(w3_get_config ;"cache_expire")
-
-// Check modify date of the file then check difference from current date
-
-GET DOCUMENT PROPERTIES($cache_path;$doc_locked;$invisible;$created_on;$created_at;$modified_on;$modified_at)
-
-$current_timestamp:=String(Current date;ISO date;Current time)
-$current_date:=Date($current_timestamp)
-$current_time:=Time($current_timestamp)
-
-$diff_date:=($current_date-$modified_on)
-
-Case of 
-: ($diff_date=1)
-// If date difference is 1
-$cache_valid:=$current_time<$modified_at// And time difference is negative
-
-: ($diff_date<$cache_expire)
-// Valid
-$cache_valid:=True
-
-Else 
-
-$cache_valid:=False
-
-End case 
-
-If ($cache_valid)
-// Get from cache
-DOCUMENT TO BLOB($cache_path;$blob)
-$0:=BLOB to text($blob;UTF8 text without length)
-Else 
-// Delete expired cache
-DELETE DOCUMENT($cache_path)
-End if 
-
-Else 
-
-// No cache
-
-End if 
-
+If ($cache_enabled)  // Only when enabled
+	
+	If ($encryptedKey)
+		$key_filename:=Generate digest($key;SHA1 digest)
+	Else 
+		$key_filename:=$key
+	End if 
+	
+	$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
+	$cache_path:=$folder_path+Folder separator+$key_filename+".cache"
+	
+	If (Test path name($cache_path)=Is a document)
+		
+		  // In Roadmap, Check cache expire.
+		
+		$cache_expire:=OB Get(w3_get_config ;"cache_expire")
+		
+		  // Check modify date of the file then check difference from current date
+		
+		GET DOCUMENT PROPERTIES($cache_path;$doc_locked;$invisible;$created_on;$created_at;$modified_on;$modified_at)
+		
+		$current_timestamp:=String(Current date;ISO date;Current time)
+		$current_date:=Date($current_timestamp)
+		$current_time:=Time($current_timestamp)
+		
+		$diff_date:=($current_date-$modified_on)
+		
+		Case of 
+			: ($cache_expire=0)
+				$cache_valid:=True
+			: ($diff_date=1)
+				  // If date difference is 1
+				$cache_valid:=$current_time<$modified_at  // And time difference is negative
+			: ($diff_date<$cache_expire)
+				  // Valid
+				$cache_valid:=True
+			Else 
+				$cache_valid:=False
+		End case 
+		
+		If ($cache_valid)
+			  // Get from cache
+			DOCUMENT TO BLOB($cache_path;$blob)
+			$0:=BLOB to text($blob;UTF8 text without length)
+		Else 
+			  // Delete expired cache
+			DELETE DOCUMENT($cache_path)
+		End if 
+		
+	Else 
+		
+		  // No cache
+		
+	End if 
+	
 End if 
