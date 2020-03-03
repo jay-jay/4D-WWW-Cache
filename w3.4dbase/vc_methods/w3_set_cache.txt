@@ -12,6 +12,7 @@ If (True)  //Declarations and initialization of variables
 	C_TEXT($1;$key;$url_file)
 	C_TEXT($2;$body)
 	C_BOOLEAN($3;$encryptedKey)
+	C_TEXT($4;$Subfolder)
 	C_LONGINT($CP)
 	C_BOOLEAN($Continue)
 	C_TEXT($key_filename)
@@ -27,6 +28,9 @@ If (True)  //Declarations and initialization of variables
 		$encryptedKey:=$3
 	Else 
 		$encryptedKey:=True
+	End if 
+	If ($CP>=4)
+		$Subfolder:=$4
 	End if 
 End if 
 
@@ -52,6 +56,16 @@ Case of
 		Else 
 			  // Create the folder
 			CREATE FOLDER($folder_path)
+		End if 
+		
+		If ($Subfolder#"")
+			$folder_path:=$folder_path+Folder separator+$Subfolder
+			If (Test path name($folder_path)=Is a folder)
+				  // Do nothing
+			Else 
+				  // Create the folder
+				CREATE FOLDER($folder_path)
+			End if 
 		End if 
 		
 		$cache_path:=$folder_path+Folder separator+$key_filename+".cache"

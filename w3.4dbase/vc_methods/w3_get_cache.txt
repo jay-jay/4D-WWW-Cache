@@ -11,6 +11,7 @@ If (True)  //Declarations and initialization of variables
 	C_TEXT($0)
 	C_TEXT($1;$key;$key_filename)
 	C_BOOLEAN($2;$encryptedKey)
+	C_TEXT($3;$Subfolder)
 	C_BOOLEAN($cache_valid)
 	C_BLOB($blob)
 	C_LONGINT($cache_expire)
@@ -25,6 +26,9 @@ If (True)  //Declarations and initialization of variables
 	Else 
 		$encryptedKey:=True
 	End if 
+	If ($CP>=3)
+		$Subfolder:=$3
+	End if 
 End if 
 
 $cache_enabled:=OB Get(w3_get_config ;"cache_enabled")
@@ -38,6 +42,9 @@ If ($cache_enabled)  // Only when enabled
 	End if 
 	
 	$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
+	If ($Subfolder#"")
+		$folder_path:=$folder_path+Folder separator+$Subfolder
+	End if 
 	$cache_path:=$folder_path+Folder separator+$key_filename+".cache"
 	
 	If (Test path name($cache_path)=Is a document)
