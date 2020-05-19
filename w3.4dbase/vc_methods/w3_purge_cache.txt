@@ -1,71 +1,71 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true,"executedOnServer":true} comment added and reserved by 4D.
-// ----------------------------------------------------
-// Developer: James Borillo
-// Date and time: 02/10/16 at 15:58
-// ----------------------------------------------------
-// Purge cache
-// @param_1: key to delete
+  //%attributes = {"invisible":true,"shared":true,"publishedWeb":true,"executedOnServer":true,"lang":"en"} comment added and reserved by 4D.
+  // ----------------------------------------------------
+  // Developer: James Borillo
+  // Date and time: 02/10/16 at 15:58
+  // ----------------------------------------------------
+  // Purge cache
+  // @param_1: key to delete
 
-If (True)//Declarations and initialization of variables
-C_TEXT($0)
-C_TEXT($1;$key;$key_hash)
-C_BLOB($blob)
-C_LONGINT($cache_expire)
-C_LONGINT($CP)
-$CP:=Count parameters
-
-C_OBJECT($o_txt)
+If (True)  //Declarations and initialization of variables
+	C_TEXT($0)
+	C_TEXT($1;$key;$key_hash)
+	C_BLOB($blob)
+	C_LONGINT($cache_expire)
+	C_LONGINT($CP)
+	$CP:=Count parameters
+	
+	C_OBJECT($o_txt)
 End if 
 
-If (OB Get(w3_get_config ;"cache_enabled"))// Only when enabled
-
-$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
-
-If ($CP>=1)
-$to_purge:=$1
-Else 
-$to_purge:=w3_request ("key")
-End if 
-
-Case of 
-: ($to_purge="all")
-// Delete folder w3_cache
-DOCUMENT LIST($folder_path;$a_documents)
-$ii:=Size of array($a_documents)
-If ($ii>0)// Purge onlyif w3_cache folder is not empty
-For ($i;1;$ii)
-$cache_path:=$folder_path+Folder separator+$a_documents{$i}
-DELETE DOCUMENT($cache_path)
-End for 
-WEB SEND TEXT("All cache purged...")
-
-Else 
-WEB SEND TEXT("Nothing to purge....")
-
-End if 
-
-: ($to_purge#"")
-
-$key:=$to_purge
-$key_hash:=Generate digest($key;SHA1 digest)
-
-$cache_path:=$folder_path+Folder separator+$key_hash+".cache"
-
-If (Test path name($cache_path)=Is a document)
-
-DELETE DOCUMENT($cache_path)
-WEB SEND TEXT("PURGED: "+$key)
-
-Else 
-
-WEB SEND TEXT("Nothing to purge....")
-
-End if 
-
-Else 
-
-WEB SEND TEXT("Please specify key to purge...")
-
-End case 
-
+If (OB Get(w3_get_config ;"cache_enabled"))  // Only when enabled
+	
+	$folder_path:=Get 4D folder(Database folder;*)+"w3_cache"
+	
+	If ($CP>=1)
+		$to_purge:=$1
+	Else 
+		$to_purge:=w3_request ("key")
+	End if 
+	
+	Case of 
+		: ($to_purge="all")
+			  // Delete folder w3_cache
+			DOCUMENT LIST($folder_path;$a_documents)
+			$ii:=Size of array($a_documents)
+			If ($ii>0)  // Purge onlyif w3_cache folder is not empty
+				For ($i;1;$ii)
+					$cache_path:=$folder_path+Folder separator+$a_documents{$i}
+					DELETE DOCUMENT($cache_path)
+				End for 
+				WEB SEND TEXT("All cache purged...")
+				
+			Else 
+				WEB SEND TEXT("Nothing to purge....")
+				
+			End if 
+			
+		: ($to_purge#"")
+			
+			$key:=$to_purge
+			$key_hash:=Generate digest($key;SHA1 digest)
+			
+			$cache_path:=$folder_path+Folder separator+$key_hash+".cache"
+			
+			If (Test path name($cache_path)=Is a document)
+				
+				DELETE DOCUMENT($cache_path)
+				WEB SEND TEXT("PURGED: "+$key)
+				
+			Else 
+				
+				WEB SEND TEXT("Nothing to purge....")
+				
+			End if 
+			
+		Else 
+			
+			WEB SEND TEXT("Please specify key to purge...")
+			
+	End case 
+	
 End if 

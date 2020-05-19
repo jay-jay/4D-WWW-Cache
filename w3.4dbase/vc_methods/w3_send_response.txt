@@ -1,10 +1,10 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-//Handles HTTP responses. Can send HTML, JSON and Redirects
+  //%attributes = {"invisible":true,"shared":true,"publishedWeb":true,"lang":"en"} comment added and reserved by 4D.
+  //Handles HTTP responses. Can send HTML, JSON and Redirects
 
-//$1 TEXT-Response(json, html)-Ignored if$2 is 301
-//{$2}LONGINT-HTTP status code(default: 200)-Use 301 to redirect
-//{$3}TEXT-Content-Type(default: text/html)(It is good practice to send response with the proper content-Type)
-//{$4}TEXT-Redirect URL(This is ignored if status code is NOT 301)
+  //$1 TEXT-Response(json, html)-Ignored if$2 is 301
+  //{$2}LONGINT-HTTP status code(default: 200)-Use 301 to redirect
+  //{$3}TEXT-Content-Type(default: text/html)(It is good practice to send response with the proper content-Type)
+  //{$4}TEXT-Redirect URL(This is ignored if status code is NOT 301)
 
 C_TEXT($0)
 C_TEXT($1;$response)
@@ -14,23 +14,23 @@ C_TEXT($4;$url_redirect)
 $cp:=Count parameters
 
 If ($cp>=1)
-$response:=$1
+	$response:=$1
 End if 
 
 If ($cp>=2)
-$status_code:=$2
+	$status_code:=$2
 Else 
-$status_code:=200// Ok
+	$status_code:=200  // Ok
 End if 
 
 If ($cp>=3)
-$content_type:=$3
+	$content_type:=$3
 Else 
-$content_type:="text/html"
+	$content_type:="text/html"
 End if 
 
 If ($cp>=4)
-$url_redirect:=$4
+	$url_redirect:=$4
 End if 
 
 ARRAY TEXT($fieldArray;0)
@@ -45,8 +45,8 @@ APPEND TO ARRAY($valueArray;String($status_code))
 WEB SET HTTP HEADER($fieldArray;$valueArray)
 
 Case of 
-: ($status_code=301) | ($status_code=302)
-WEB SEND HTTP REDIRECT($url_redirect;*)
-Else 
-WEB SEND TEXT($response;$content_type)
+	: ($status_code=301) | ($status_code=302)
+		WEB SEND HTTP REDIRECT($url_redirect;*)
+	Else 
+		WEB SEND TEXT($response;$content_type)
 End case 

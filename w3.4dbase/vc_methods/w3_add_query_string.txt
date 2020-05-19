@@ -1,11 +1,11 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-// ----------------------------------------------------
-// Developer: James Borillo
-// ----------------------------------------------------
-// Replaces a query strings value
-// @param_1: URL with query strings
-// @param_2: query string
-// @param_3: New value
+  //%attributes = {"invisible":true,"shared":true,"publishedWeb":true,"lang":"en"} comment added and reserved by 4D.
+  // ----------------------------------------------------
+  // Developer: James Borillo
+  // ----------------------------------------------------
+  // Replaces a query strings value
+  // @param_1: URL with query strings
+  // @param_2: query string
+  // @param_3: New value
 
 C_TEXT($0)
 C_TEXT($1;$url)
@@ -20,49 +20,49 @@ C_BOOLEAN($continue)
 $cp:=Count parameters
 
 If ($cp>=3)
-$url:=$1
-$query_string:=$2
-$new_value:=$3
-$continue:=True
+	$url:=$1
+	$query_string:=$2
+	$new_value:=$3
+	$continue:=True
 End if 
 
 If ($cp>=4)
-$replaceQueryString:=$4
+	$replaceQueryString:=$4
 End if 
 
 If ($continue)
-
-$query_string_len:=Length($query_string)
-$pos:=Position("?"+$query_string;$url)
-If ($pos<1)
-$pos:=Position("&"+$query_string;$url)
-$separator:="&"
-Else 
-$separator:="?"
-End if 
-
-Case of 
-: ($pos<1)// Append query string
-If (Position("?";$url)>0)
-$0:=$url+"&"+$query_string+"="+$new_value
-Else 
-$0:=$url+"?"+$query_string+"="+$new_value
-End if 
-
-: ($replaceQueryString)// Replace query string
-$value:=Substring($url;$pos)
-
-$pos_ampersand:=Position("&";$value;2)// Disregard first ampersand
-If ($pos_ampersand>0)
-$value:=Substring($value;1;$pos_ampersand-1)
-End if 
-
-$new_value:=$separator+$query_string+"="+$new_value
-
-$0:=Replace string($url;$value;$new_value)
-Else 
-$0:=$url
-
-End case 
-
+	
+	$query_string_len:=Length($query_string)
+	$pos:=Position("?"+$query_string;$url)
+	If ($pos<1)
+		$pos:=Position("&"+$query_string;$url)
+		$separator:="&"
+	Else 
+		$separator:="?"
+	End if 
+	
+	Case of 
+		: ($pos<1)  // Append query string
+			If (Position("?";$url)>0)
+				$0:=$url+"&"+$query_string+"="+$new_value
+			Else 
+				$0:=$url+"?"+$query_string+"="+$new_value
+			End if 
+			
+		: ($replaceQueryString)  // Replace query string
+			$value:=Substring($url;$pos)
+			
+			$pos_ampersand:=Position("&";$value;2)  // Disregard first ampersand
+			If ($pos_ampersand>0)
+				$value:=Substring($value;1;$pos_ampersand-1)
+			End if 
+			
+			$new_value:=$separator+$query_string+"="+$new_value
+			
+			$0:=Replace string($url;$value;$new_value)
+		Else 
+			$0:=$url
+			
+	End case 
+	
 End if 

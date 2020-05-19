@@ -1,4 +1,4 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
+  //%attributes = {"invisible":true,"shared":true,"publishedWeb":true,"lang":"en"} comment added and reserved by 4D.
 C_TEXT($0)
 C_LONGINT($1;$segment_number)
 C_TEXT($2;$url)
@@ -8,37 +8,37 @@ C_BOOLEAN($continue)
 $cp:=Count parameters
 
 If ($cp>=3)
-$segment_number:=$1
-$url:=$2
-$replace_string:=$3
-$continue:=True
+	$segment_number:=$1
+	$url:=$2
+	$replace_string:=$3
+	$continue:=True
 End if 
 
 If ($continue)
-
-If (Position("/";$url)=1)
-$url:=Substring($url;2)// Strip the first slash(/)
-End if 
-
-ARRAY TEXT($a_segments;0)
-$start:=1
-
-While (Length($url)>0) & (Position("/";$url)>0)
-$pos:=Position("/";$url)
-$text:=Substring($url;$start;$pos-1)
-APPEND TO ARRAY($a_segments;$text)
-$url:=Substring($url;$pos+1)
-End while 
-
-$new_url:=""
-$ii:=Size of array($a_segments)
-If ($ii>0)
-$a_segments{$segment_number}:=$replace_string
-For ($i;1;$ii)
-$new_url:=$new_url+$a_segments{$i}+"/"
-End for 
-End if 
-
-$0:="/"+$new_url+$url// append the remaining url which is usually query strings
-
+	
+	If (Position("/";$url)=1)
+		$url:=Substring($url;2)  // Strip the first slash(/)
+	End if 
+	
+	ARRAY TEXT($a_segments;0)
+	$start:=1
+	
+	While (Length($url)>0) & (Position("/";$url)>0)
+		$pos:=Position("/";$url)
+		$text:=Substring($url;$start;$pos-1)
+		APPEND TO ARRAY($a_segments;$text)
+		$url:=Substring($url;$pos+1)
+	End while 
+	
+	$new_url:=""
+	$ii:=Size of array($a_segments)
+	If ($ii>0)
+		$a_segments{$segment_number}:=$replace_string
+		For ($i;1;$ii)
+			$new_url:=$new_url+$a_segments{$i}+"/"
+		End for 
+	End if 
+	
+	$0:="/"+$new_url+$url  // append the remaining url which is usually query strings
+	
 End if 
