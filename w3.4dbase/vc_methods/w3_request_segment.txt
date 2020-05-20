@@ -8,9 +8,10 @@
   // $2 TEXT clean-url
 
 C_TEXT($0)
-_O_C_INTEGER($1;$segment)
+C_LONGINT($1;$segment)
 C_TEXT($2;$url)
-C_BOOLEAN($phpok)
+C_COLLECTION($cSegments)
+$cSegments:=New collection
 $CP:=Count parameters
 $Continue:=False
 
@@ -22,29 +23,17 @@ If ($CP>=2)
 	$url:=$2
 End if 
 
+If (Length($url)=0)
+	$url:=OB Get(w3_ob_http_header ;"X-URL")
+End if 
+
 If ($Continue)
 	
-	If (Length($url)=0)
-		$url:=OB Get(w3_ob_http_header ;"X-URL")
-	End if 
-	
 	$url:=Substring($url;2)  // Strip the first slash(/)
+	$cSegments:=Split string($url;"/")
 	
-	ARRAY TEXT($a_segments;0)
-	
-	$count:=0
-	While ((Not($phpok)) & ($count<=10))  // 10 max iteration to prevent infinite loop
-		$phpok:=PHP Execute("";"explode";$a_segments;"/";$url)
-		$count:=$count+1
-	End while 
-	
-	If ($phpok) & (Size of array($a_segments)>=$segment)
-		$query_string_start:=Position("?";$a_segments{$segment})
-		If ($query_string_start>0)
-			$0:=Substring($a_segments{$segment};1;$query_string_start-1)
-		Else 
-			$0:=$a_segments{$segment}
-		End if 
+	If ($cSegments.count()>=$segment)
+		$0:=$cSegments[$segment-1]
 	End if 
 	
 End if 

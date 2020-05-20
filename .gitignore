@@ -1,7 +1,7 @@
 w3-config.json
 w3.4dbase/Components
 w3.4dbase/vc_data
-w3.4dbase/vc_methods/Debug.txt
+w3.4dbase/vc_methods/Debug*
 w3.4dbase/w3.4DD
 # w3.4dbase/w3.4DIndy # Always include 4DIndy in git
 w3.4dbase/w3.journal
@@ -13,3 +13,7 @@ w3.4dbase/Preferences/BuildApp
 w3.4dbase/Resources/cache/
 Backup.xml
 *.4BK
+
+w3.4dbase/Project/*
+w3.4dbase/Settings/*
+w3.4dbase/UserPreferences*

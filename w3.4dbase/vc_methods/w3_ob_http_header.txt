@@ -1,24 +1,14 @@
-//%attributes = {"lang":"en","invisible":true,"shared":true,"publishedWeb":true} comment added and reserved by 4D.
-// ----------------------------------------------------
-// Developer: James Borillo
-// Date and time: 21/09/16 at 13:35
-// ----------------------------------------------------
-// Returns HTTP HEADERS as JSON
+  //%attributes = {"invisible":true,"shared":true,"publishedWeb":true,"lang":"en"} comment added and reserved by 4D.
+  // ----------------------------------------------------
+  // Developer: James Borillo
+  // Date and time: 21/09/16 at 13:35
+  // ----------------------------------------------------
+  // Returns HTTP HEADERS as JSON
 
-C_OBJECT($0;o_w3_http_header)
-
-If (OB Is defined(o_w3_http_header))
-// Do nothing
-Else 
-ARRAY TEXT($a_fields;0)
-ARRAY TEXT($a_values;0)
-
+C_OBJECT($0)
+C_OBJECT($obj)
 WEB GET HTTP HEADER($a_fields;$a_values)
 $ii:=Size of array($a_fields)
-
 For ($i;1;$ii)
-OB SET(o_w3_http_header;$a_fields{$i};$a_values{$i})
+	OB SET($0;$a_fields{$i};$a_values{$i})
 End for 
-
-End if 
-$0:=o_w3_http_header
