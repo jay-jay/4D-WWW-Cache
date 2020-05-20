@@ -30,8 +30,13 @@ End if
 If ($Continue)
 	
 	$url:=Substring($url;2)  // Strip the first slash(/)
-	$cSegments:=Split string($url;"/")
 	
+	$query_string_start:=Position("?";$url)
+	If ($query_string_start>0)
+		$url:=Substring($url;1;$query_string_start-1)
+	End if 
+	
+	$cSegments:=Split string($url;"/")
 	If ($cSegments.count()>=$segment)
 		$0:=$cSegments[$segment-1]
 	End if 
